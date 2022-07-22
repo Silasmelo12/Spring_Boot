@@ -39,8 +39,22 @@ public class AnimeController {
 
     //Quando há apenas um método POST no Controller então o Spring encontra automaticamente
 
+    //@RequestBody recebe um corpo de requisição, um objeto.
+    // Se caso os parametros forem iguais, então automaticamente será o proprio objeto
     @PostMapping
     public ResponseEntity<Anime> save(@RequestBody Anime anime) {
         return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    }
+
+    //@PathVariable pega um valor passando na url
+    @DeleteMapping(path = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id){
+        animeService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping
+    public ResponseEntity<Anime> replace(@RequestBody Anime anime){
+        return new ResponseEntity<>(animeService.replace(anime),HttpStatus.OK);
     }
 }

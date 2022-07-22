@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import projeto.springboot.domain.Anime;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import java.util.concurrent.ThreadLocalRandom;
@@ -45,6 +43,15 @@ public class AnimeService {
         return anime;
     }
 
+    public void delete(long id){
+        animes.remove(findById(id));
+    }
 
 
+    public Anime replace(Anime anime) {
+
+        int index = animes.indexOf(findById(anime.getId()));
+        animes.set(index,anime);
+        return anime;
+    }
 }
