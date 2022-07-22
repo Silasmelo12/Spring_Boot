@@ -10,13 +10,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 @Service //regra de negócios
 public class AnimeService {
     //implements AnimeRepository
     //private final AnimeRepository AnimeRepository;
 
-    List<Anime> animes = Arrays.asList(new Anime(3L,"One Peace"),new Anime(2L,"Naruto"),new Anime(1L,"DBZ"),new Anime(4L, "Medabots"));
+    private static List<Anime> animes;
 
+    static {
+
+        animes = new ArrayList<>();
+        animes.add(new Anime(1L,"DBZ"));
+        animes.add(new Anime(2L,"Naruto"));
+        animes.add(new Anime(3L,"One Peace"));
+        animes.add(new Anime(4L, "Medabots"));
+    }
     public List<Anime> listAll(){
         return animes;
     }
@@ -27,6 +37,12 @@ public class AnimeService {
                 .filter(item->item.getId().equals(id))
                 .findFirst()
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.BAD_REQUEST,"Anime not found"));
+    }
+
+    public Anime save(Anime anime){
+        anime.setId(ThreadLocalRandom.current().nextLong(5,100000));
+        animes.add(anime);
+        return anime;
     }
 
 

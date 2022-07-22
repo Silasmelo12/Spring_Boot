@@ -9,5 +9,6 @@ public class Anime {
 
     private Long id;
     private String nome;
-
+    public Anime() {
+    }
 }

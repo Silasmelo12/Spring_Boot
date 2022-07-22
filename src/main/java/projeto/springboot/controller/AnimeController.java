@@ -5,16 +5,12 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import projeto.springboot.domain.Anime;
 import projeto.springboot.service.AnimeService;
 import projeto.springboot.util.DateUtil;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,15 +25,22 @@ public class AnimeController {
     //ResponseEntity retorna tanto a resposta quanto o estado atual
     @GetMapping //sem o path = "list"
     @ResponseBody //Rest
-    public ResponseEntity<List<Anime>> list(){
+    public ResponseEntity<List<Anime>> list() {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK) ;
+        return new ResponseEntity<>(animeService.listAll(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseBody
-    public ResponseEntity<Anime> findById(@PathVariable long id){
+    public ResponseEntity<Anime> findById(@PathVariable long id) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return new ResponseEntity<>(animeService.findById(id),HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findById(id), HttpStatus.OK);
+    }
+
+    //Quando há apenas um método POST no Controller então o Spring encontra automaticamente
+
+    @PostMapping
+    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
+        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
     }
 }
