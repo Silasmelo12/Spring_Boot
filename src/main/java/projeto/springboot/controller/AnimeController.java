@@ -22,7 +22,7 @@ public class AnimeController {
     private final DateUtil dateUtil;
     private final AnimeService animeService;
 
-    //ResponseEntity retorna tanto a resposta quanto o estado atual
+    //ResponseEntity retorna tanto a resposta quanto o estado atuall
     @GetMapping //sem o path = "list"
     @ResponseBody //Rest
     public ResponseEntity<List<Anime>> list() {
