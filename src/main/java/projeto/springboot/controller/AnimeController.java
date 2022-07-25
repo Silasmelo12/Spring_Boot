@@ -41,8 +41,8 @@ public class AnimeController {
 
     @GetMapping(path = "find")
     @ResponseBody
-    public ResponseEntity<List<Anime>> findByNome(@RequestParam String nome){
-        return new ResponseEntity<>(animeService.findByNome(nome),HttpStatus.OK);
+    public ResponseEntity<List<Anime>> findByNome(@RequestParam String nome) {
+        return new ResponseEntity<>(animeService.findByNome(nome), HttpStatus.OK);
     }
 
     //Quando há apenas um método POST no Controller então o Spring encontra automaticamente
@@ -52,21 +52,21 @@ public class AnimeController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
-        System.out.println("o qie está vindo: "+animePostRequestBody.getNome());
+        System.out.println("o qie está vindo: " + animePostRequestBody.getNome());
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     //@PathVariable pega um valor passando na url
     @DeleteMapping(path = "/{id}")
     @ResponseBody
-    public ResponseEntity<Void> delete(@PathVariable long id){
+    public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
     @ResponseBody
-    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

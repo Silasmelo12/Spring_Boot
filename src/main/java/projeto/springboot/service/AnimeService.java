@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import projeto.springboot.Mapper.AnimeMapper;
 import projeto.springboot.domain.Anime;
+import projeto.springboot.exception.BadRequestException;
 import projeto.springboot.repository.AnimeRepository;
 import projeto.springboot.requests.AnimePostRequestBody;
 import projeto.springboot.requests.AnimePutRequestBody;
@@ -20,35 +21,34 @@ public class AnimeService {
 
     private final AnimeRepository animeRepository;
 
-    public List<Anime> listAll(){
+    public List<Anime> listAll() {
         return animeRepository.findAll();
     }
 
-    public List<Anime> findByNome(String nome){
+    public List<Anime> findByNome(String nome) {
         return animeRepository.findByNome(nome);
     }
 
-    public Anime findByIdOrThrowBadRequestException(long id){
+    public Anime findByIdOrThrowBadRequestException(long id) {
         //return animes.get((int)id);
         return animeRepository.findById(id)
-                .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime não encontrado"));
+                .orElseThrow(() -> new BadRequestException("Anime não encontrado"));
     }
 
-    public Anime save(AnimePostRequestBody animePostRequestBody){
+    public Anime save(AnimePostRequestBody animePostRequestBody) {
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
-        System.out.println("o qie chegou: "+anime.getNome());
+        System.out.println("o qie chegou: " + anime.getNome());
         //Anime anime = Anime.builder().nome(animePostRequestBody.getNome()).build();
         return animeRepository.save(anime);
     }
 
-    public void delete(long id){
+    public void delete(long id) {
         animeRepository.delete(findByIdOrThrowBadRequestException(id));
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
-        System.out.println("nome cadastrado: "+anime.getNome());
         /*
         Anime anime = Anime.builder()
                 .id(savedAnime.getId())
