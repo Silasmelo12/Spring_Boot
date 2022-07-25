@@ -39,25 +39,34 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
+    @GetMapping(path = "find")
+    @ResponseBody
+    public ResponseEntity<List<Anime>> findByNome(@RequestParam String nome){
+        return new ResponseEntity<>(animeService.findByNome(nome),HttpStatus.OK);
+    }
+
     //Quando há apenas um método POST no Controller então o Spring encontra automaticamente
 
     //@RequestBody recebe um corpo de requisição, um objeto.
     // Se caso os parametros forem iguais, então automaticamente será o proprio objeto
     @PostMapping
+    @ResponseBody
     public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        System.out.println("o qie está vindo: "+animePostRequestBody.getNome());
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     //@PathVariable pega um valor passando na url
     @DeleteMapping(path = "/{id}")
+    @ResponseBody
     public ResponseEntity<Void> delete(@PathVariable long id){
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
-        System.out.println("Anime1: "+animePutRequestBody.getName());
+    @ResponseBody
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
