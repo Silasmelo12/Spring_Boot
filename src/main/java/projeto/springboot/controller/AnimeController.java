@@ -12,6 +12,7 @@ import projeto.springboot.requests.AnimePutRequestBody;
 import projeto.springboot.service.AnimeService;
 import projeto.springboot.util.DateUtil;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class AnimeController {
     // Se caso os parametros forem iguais, então automaticamente será o proprio objeto
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         System.out.println("o qie está vindo: " + animePostRequestBody.getNome());
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
