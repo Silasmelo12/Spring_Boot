@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+import projeto.springboot.Mapper.AnimeMapper;
 import projeto.springboot.domain.Anime;
 import projeto.springboot.repository.AnimeRepository;
 import projeto.springboot.requests.AnimePostRequestBody;
@@ -30,7 +31,8 @@ public class AnimeService {
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody){
-        Anime anime = Anime.builder().nome(animePostRequestBody.getName()).build();
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
+        //Anime anime = Anime.builder().nome(animePostRequestBody.getName()).build();
         return animeRepository.save(anime);
     }
 
@@ -40,11 +42,14 @@ public class AnimeService {
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
         Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
-        System.out.println("O nome do anime é: "+savedAnime.getNome());
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
+        /*
         Anime anime = Anime.builder()
                 .id(savedAnime.getId())
                 .nome(animePutRequestBody.getName())
                 .build();
+
+         */
         animeRepository.save(anime);
     }
 }
