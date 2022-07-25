@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import projeto.springboot.domain.Anime;
+import projeto.springboot.requests.AnimePostRequestBody;
+import projeto.springboot.requests.AnimePutRequestBody;
 import projeto.springboot.service.AnimeService;
 import projeto.springboot.util.DateUtil;
 
@@ -34,7 +36,7 @@ public class AnimeController {
     @ResponseBody
     public ResponseEntity<Anime> findById(@PathVariable long id) {
         log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
-        return new ResponseEntity<>(animeService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
     //Quando há apenas um método POST no Controller então o Spring encontra automaticamente
@@ -42,8 +44,8 @@ public class AnimeController {
     //@RequestBody recebe um corpo de requisição, um objeto.
     // Se caso os parametros forem iguais, então automaticamente será o proprio objeto
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     //@PathVariable pega um valor passando na url
@@ -54,7 +56,9 @@ public class AnimeController {
     }
 
     @PutMapping
-    public ResponseEntity<Anime> replace(@RequestBody Anime anime){
-        return new ResponseEntity<>(animeService.replace(anime),HttpStatus.OK);
+    public ResponseEntity<Anime> replace(@RequestBody AnimePutRequestBody animePutRequestBody){
+        System.out.println("Anime1: "+animePutRequestBody.getName());
+        animeService.replace(animePutRequestBody);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
