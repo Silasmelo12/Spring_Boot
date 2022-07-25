@@ -1,9 +1,8 @@
 package projeto.springboot.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 import projeto.springboot.Mapper.AnimeMapper;
 import projeto.springboot.domain.Anime;
 import projeto.springboot.exception.BadRequestException;
@@ -12,7 +11,6 @@ import projeto.springboot.requests.AnimePostRequestBody;
 import projeto.springboot.requests.AnimePutRequestBody;
 
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 @RequiredArgsConstructor
 @Service //regra de negócios
@@ -35,11 +33,12 @@ public class AnimeService {
                 .orElseThrow(() -> new BadRequestException("Anime não encontrado"));
     }
 
+    @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
-        System.out.println("o qie chegou: " + anime.getNome());
+        anime = animeRepository.save(anime);
         //Anime anime = Anime.builder().nome(animePostRequestBody.getNome()).build();
-        return animeRepository.save(anime);
+        return anime;
     }
 
     public void delete(long id) {
