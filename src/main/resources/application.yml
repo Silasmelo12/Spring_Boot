@@ -4,7 +4,7 @@ server:
 
 spring:
     datasource:
-      url: jdbc:mysql://localhost:3306/Anime?useSSL=false&createDatabaseIfNotExist=true
+      url: jdbc:mysql://localhost:3306/Anime?createDatabaseIfNotExist=true
       username: root
       password: root
     jpa:
