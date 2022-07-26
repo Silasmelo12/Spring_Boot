@@ -1,16 +1,9 @@
 package projeto.springboot.exception;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
-
-@Data
-@Builder
-public class BadRequestExceptionDetails {
-    private String title;
-    private int status;
-    private String details;
-    private String developerMessege;
-    private LocalDateTime timestamp;
+@Getter
+@SuperBuilder
+public class BadRequestExceptionDetails extends ExceptionDetails {
 }
