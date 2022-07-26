@@ -1,6 +1,8 @@
 package projeto.springboot.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import projeto.springboot.Mapper.AnimeMapper;
@@ -19,8 +21,8 @@ public class AnimeService {
 
     private final AnimeRepository animeRepository;
 
-    public List<Anime> listAll() {
-        return animeRepository.findAll();
+    public Page<Anime> listAll(Pageable pageable) {
+        return animeRepository.findAll(pageable);
     }
 
     public List<Anime> findByNome(String nome) {
@@ -37,6 +39,7 @@ public class AnimeService {
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
         anime = animeRepository.save(anime);
+        System.out.println("Quem ta chegando: "+anime.getNome());
         //Anime anime = Anime.builder().nome(animePostRequestBody.getNome()).build();
         return anime;
     }

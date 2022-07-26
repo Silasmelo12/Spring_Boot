@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Log4j2
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<BadRequestExceptionDetails> handleBadRequestException(BadRequestException bre){
+    public ResponseEntity<BadRequestExceptionDetails> handlerBadRequestException(BadRequestException bre){
         return new ResponseEntity<>(
                 BadRequestExceptionDetails.builder()
                         .timestamp(LocalDateTime.now())
