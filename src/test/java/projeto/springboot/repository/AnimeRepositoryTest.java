@@ -99,5 +99,5 @@ class AnimeRepositoryTest {
         return Anime.builder()
                 .nome("naruto")
                 .build();
-    }
+    } 
 }
