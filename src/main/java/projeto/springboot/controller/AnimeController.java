@@ -38,14 +38,14 @@ public class AnimeController {
     @GetMapping(path = "/all") //sem o path = "list"
     @ResponseBody //Rest
     public ResponseEntity<List<Anime>> listAll() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        //log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.listAllNonPageable(), HttpStatus.OK);
     }
 
     @GetMapping(path = "/{id}")
     @ResponseBody
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        //log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
@@ -62,7 +62,6 @@ public class AnimeController {
     @PostMapping
     @ResponseBody
     public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
-        System.out.println("o qie está vindo: " + animePostRequestBody.getNome());
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 

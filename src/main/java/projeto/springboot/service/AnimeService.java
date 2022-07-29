@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import projeto.springboot.Mapper.AnimeMapper;
+import projeto.springboot.mapper.AnimeMapper;
 import projeto.springboot.domain.Anime;
 import projeto.springboot.exception.BadRequestException;
 import projeto.springboot.repository.AnimeRepository;
@@ -34,7 +34,6 @@ public class AnimeService {
     }
 
     public Anime findByIdOrThrowBadRequestException(long id) {
-        //return animes.get((int)id);
         return animeRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Anime não encontrado"));
     }
@@ -42,10 +41,7 @@ public class AnimeService {
     @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
-        anime = animeRepository.save(anime);
-        System.out.println("Quem ta chegando: "+anime.getNome());
-        //Anime anime = Anime.builder().nome(animePostRequestBody.getNome()).build();
-        return anime;
+        return animeRepository.save(anime);
     }
 
     public void delete(long id) {
@@ -53,15 +49,8 @@ public class AnimeService {
     }
 
     public void replace(AnimePutRequestBody animePutRequestBody) {
-        Anime savedAnime = findByIdOrThrowBadRequestException(animePutRequestBody.getId());
+        findByIdOrThrowBadRequestException(animePutRequestBody.getId());
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePutRequestBody);
-        /*
-        Anime anime = Anime.builder()
-                .id(savedAnime.getId())
-                .nome(animePutRequestBody.getNome())
-                .build();
-
-        */
         animeRepository.save(anime);
     }
 }

@@ -1,4 +1,4 @@
-package projeto.springboot.Configurer;
+package projeto.springboot.configurer;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;

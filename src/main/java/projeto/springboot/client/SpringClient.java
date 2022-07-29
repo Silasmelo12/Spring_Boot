@@ -22,7 +22,7 @@ public class SpringClient {
         log.info(object);
 
         Anime[] animes = new RestTemplate().getForObject("http://localhost:8080/animes/all", Anime[].class);
-        //log.info(Arrays.toString(animes));
+        log.info(Arrays.toString(animes));
 
 
         ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null,

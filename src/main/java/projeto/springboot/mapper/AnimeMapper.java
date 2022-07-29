@@ -1,4 +1,4 @@
-package projeto.springboot.Mapper;
+package projeto.springboot.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
