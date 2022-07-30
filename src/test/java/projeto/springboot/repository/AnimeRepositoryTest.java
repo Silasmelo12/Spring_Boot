@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import projeto.springboot.domain.Anime;
+import projeto.springboot.util.AnimeCreator;
 
 import javax.validation.ConstraintViolationException;
 import java.util.List;
@@ -23,7 +24,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save persists anime quando sucesso")
     void save_PersistAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
         Assertions.assertNotNull(animeSaved);
         Assertions.assertNotNull(animeSaved.getId());
@@ -33,7 +34,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Save updates anime repository")
     void save_UpdateAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -49,7 +50,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Delete anime repository")
     void delete_RemovesAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -63,7 +64,7 @@ class AnimeRepositoryTest {
     @Test
     @DisplayName("Find by name returns list of anime when successful")
     void findByName_ReturnsListOfAnime_WhenSuccessful(){
-        Anime animeToBeSaved = createAnime();
+        Anime animeToBeSaved = AnimeCreator.createAnimeToBeSaved();
 
         Anime animeSaved = this.animeRepository.save(animeToBeSaved);
 
@@ -94,10 +95,4 @@ class AnimeRepositoryTest {
 //                .isThrownBy(()->this.animeRepository.save(animeToBeSaved))
 //                .withMessageContaining("o nome do anime não pode ser nulo");
     }
-
-    private Anime createAnime(){
-        return Anime.builder()
-                .nome("naruto")
-                .build();
-    } 
 }

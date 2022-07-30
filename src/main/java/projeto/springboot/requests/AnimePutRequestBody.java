@@ -1,9 +1,10 @@
 package projeto.springboot.requests;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-//@Builder
+@Builder
 public class AnimePutRequestBody {
     private Long id;
     private String nome;

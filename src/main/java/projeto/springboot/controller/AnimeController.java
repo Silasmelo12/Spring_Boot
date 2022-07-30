@@ -15,7 +15,6 @@ import projeto.springboot.service.AnimeService;
 import projeto.springboot.util.DateUtil;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -31,7 +30,7 @@ public class AnimeController {
     @GetMapping //sem o path = "list"
     @ResponseBody //Rest
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
+        //log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK);
     }
 
