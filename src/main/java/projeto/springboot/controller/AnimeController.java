@@ -1,5 +1,7 @@
 package projeto.springboot.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
@@ -21,6 +23,7 @@ import java.util.List;
 @RequestMapping("animes")
 @Log4j2
 @RequiredArgsConstructor
+@Api(value = "API REST Anime")
 public class AnimeController {
 
     private final DateUtil dateUtil;
@@ -29,11 +32,14 @@ public class AnimeController {
     //ResponseEntity retorna tanto a resposta quanto o estado atuall
     @GetMapping //sem o path = "list"
     @ResponseBody //Rest
+    @ApiOperation(value = "Retorna lista de animes")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
         //log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()));
         return new ResponseEntity<>(animeService.listAll(pageable), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna lista de animes")
     @GetMapping(path = "/all") //sem o path = "list"
     @ResponseBody //Rest
     public ResponseEntity<List<Anime>> listAll() {
@@ -41,6 +47,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.listAllNonPageable(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna um anime específico pelo id")
     @GetMapping(path = "/{id}")
     @ResponseBody
     public ResponseEntity<Anime> findById(@PathVariable long id) {
@@ -48,6 +55,7 @@ public class AnimeController {
         return new ResponseEntity<>(animeService.findByIdOrThrowBadRequestException(id), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Retorna um anime específivo pelo nome")
     @GetMapping(path = "find")
     @ResponseBody
     public ResponseEntity<List<Anime>> findByNome(@RequestParam String nome) {
@@ -60,13 +68,16 @@ public class AnimeController {
     // Se caso os parametros forem iguais, então automaticamente será o proprio objeto
     @PostMapping
     @ResponseBody
-    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
+    @ApiOperation(value = "Cadastra um nome anime")
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        System.out.println(animePostRequestBody.getNome());
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     //@PathVariable pega um valor passando na url
     @DeleteMapping(path = "/{id}")
     @ResponseBody
+    @ApiOperation(value = "Deleta um anime pelo id")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -74,6 +85,7 @@ public class AnimeController {
 
     @PutMapping
     @ResponseBody
+    @ApiOperation(value = "Atualiza um anime")
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

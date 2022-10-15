@@ -40,7 +40,9 @@ public class AnimeService {
 
     @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
+        System.out.println("Save: "+animePostRequestBody.getNome());
         Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
+        System.out.println("Save: "+anime.getNome());
         return animeRepository.save(anime);
     }
 

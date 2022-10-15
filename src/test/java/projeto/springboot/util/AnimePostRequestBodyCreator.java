@@ -5,8 +5,7 @@ import projeto.springboot.requests.AnimePostRequestBody;
 public class AnimePostRequestBodyCreator {
 
     public static AnimePostRequestBody createAnimePostRequestBody(){
-        return AnimePostRequestBody.builder()
-                .nome(AnimeCreator.createAnimeToBeSaved().getNome())
-                .build();
+
+        return new AnimePostRequestBody(AnimeCreator.createAnimeToBeSaved().getNome());
     }
 }

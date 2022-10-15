@@ -19,7 +19,7 @@ public class Anime {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "o nome do anime não pode ser nulo")
+    @NotEmpty(message = "o nome do anime não pode ser branco")
     @NotNull(message = "o nome do anime não pode ser nulo")
     private String nome;
 }
