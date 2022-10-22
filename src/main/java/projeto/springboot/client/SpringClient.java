@@ -15,14 +15,14 @@ public class SpringClient {
     public static void main(String[] args) {
 
         ResponseEntity<Anime> entity = new RestTemplate().getForEntity
-                ("http://localhost:8080/animes/{id}", Anime.class, 13);
-        log.info(entity);
+                ("http://localhost:8080/animes/{id}", Anime.class, 1);
+        //log.info(entity);
 
-        Anime object = new RestTemplate().getForObject("http://localhost:8080/animes/{id}", Anime.class, 13);
-        log.info(object);
+        Anime object = new RestTemplate().getForObject("http://localhost:8080/animes/{id}", Anime.class, 1);
+        //log.info(object);
 
         Anime[] animes = new RestTemplate().getForObject("http://localhost:8080/animes/all", Anime[].class);
-        log.info(Arrays.toString(animes));
+        //log.info(Arrays.toString(animes));
 
 
         ResponseEntity<List<Anime>> exchange = new RestTemplate().exchange("http://localhost:8080/animes/all", HttpMethod.GET, null,
